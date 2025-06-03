@@ -27,7 +27,7 @@ public class SecurityConfig {
             .oauth2Login(oauth2 -> oauth2
                 .authorizationEndpoint(auth -> auth.baseUri("/oauth2/authorization"))
                 .redirectionEndpoint(redir -> redir.baseUri("/login/oauth2/code/*"))
-                .defaultSuccessUrl("http://localhost:3000/", true)
+                .defaultSuccessUrl("https://xenoprojectcrm.netlify.app/", true)
                 .failureUrl("/login?error=true")
             )
             .sessionManagement(session -> session
