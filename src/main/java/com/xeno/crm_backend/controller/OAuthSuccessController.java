@@ -16,7 +16,7 @@ public class OAuthSuccessController {
     public void success(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         String redirectUri = request.getParameter("redirect_uri");
         if (redirectUri == null || redirectUri.isEmpty()) {
-            redirectUri = "http://localhost:3000/";
+            redirectUri = "https://xenoprojectcrm.netlify.app/";
         }
         response.sendRedirect(redirectUri);
     }
