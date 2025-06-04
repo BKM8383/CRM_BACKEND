@@ -10,9 +10,14 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedOrigins("https://xenoprojectcrm.netlify.app")
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            .allowedOrigins(
+                "https://xenoprojectcrm.netlify.app",
+                "http://localhost:3000",
+                "https://localhost:3000"
+            )
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD")
             .allowedHeaders("*")
+            .exposedHeaders("*")
             .allowCredentials(true)
             .maxAge(3600);
     }
