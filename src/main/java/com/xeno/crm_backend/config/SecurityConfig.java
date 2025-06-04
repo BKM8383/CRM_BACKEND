@@ -14,13 +14,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
+            .headers(headers -> headers.frameOptions().deny())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/vendor/send").permitAll()
                 .requestMatchers("/api/delivery-receipt").permitAll()
-                .requestMatchers("/", "/login**", "/error", "/actuator/**",
-                                 "/oauth2/**", "/login/oauth2/**").permitAll()
+                .requestMatchers("/", "/login**", "/error", "/actuator/**").permitAll()
+                .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
                 .requestMatchers("/api/ai/**").permitAll()
+                .requestMatchers("/api/user").authenticated() 
                 .requestMatchers("/api/**", "/vendor/**").authenticated()
                 .anyRequest().permitAll()
             )
@@ -34,6 +36,12 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(false)
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("https://xenoprojectcrm.netlify.app/")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
             );
         return http.build();
     }
